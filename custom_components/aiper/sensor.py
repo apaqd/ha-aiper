@@ -209,7 +209,6 @@ SENSOR_DESCRIPTIONS: tuple[AiperSensorEntityDescription, ...] = (
         name="Water Sample Time",
         icon="mdi:clock-outline",
         device_class=SensorDeviceClass.TIMESTAMP,
-        entity_category=EntityCategory.DIAGNOSTIC,
         capability=Capability.WATER_QUALITY,
     ),
     AiperSensorEntityDescription(

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import contextlib
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any
 
 from .const import CLEAN_PATH_MAP, Status, mode_label, status_label, status_running, status_value
@@ -541,6 +541,9 @@ def normalize_w2_wqs_update(w2_wqs: dict[str, Any]) -> DeviceState:
         sample_dt: datetime | None = None
         with contextlib.suppress(TypeError, ValueError):
             sample_dt = datetime.fromisoformat(sampled_at.replace("Z", "+00:00"))
+        if sample_dt is None:
+            with contextlib.suppress(TypeError, ValueError, OSError, OverflowError):
+                sample_dt = datetime.fromtimestamp(int(sampled_at), tz=timezone.utc)
         updates["wqs_sample_time"] = EntityState(sample_dt)
 
     return updates
