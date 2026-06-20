@@ -178,6 +178,20 @@ def test_w2_wqs_update_maps_water_quality_values() -> None:
     assert state["wqs_sample_time"].value == datetime(2026, 5, 26, 12, 0, 0, tzinfo=UTC)
 
 
+def test_w2_wqs_update_parses_unix_timestamp_sample_time() -> None:
+    """Real HydroComm payloads send a Unix timestamp string, not ISO 8601."""
+    state = normalize_w2_wqs_update(
+        {
+            "time": "1781949708",
+            "temp": 24.6,
+            "ph": "7.2",
+        }
+    )
+
+    assert state["ph"].attributes == {"sample_time": "1781949708"}
+    assert state["wqs_sample_time"].value == datetime.fromtimestamp(1781949708, tz=UTC)
+
+
 def test_w2_probe_status_and_lifetime_merge_attributes() -> None:
     """Probe status is live, while lifetime payloads add serial/calibration attributes."""
     current = normalize_w2_lifetime_update(
