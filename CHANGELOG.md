@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6] - 2026-06-20
+
+### Fixed
+
+- **Water Sample Time** — `wqs_sample_time` was always unavailable because the HydroComm's `time` field (`'1781949708'`, a Unix timestamp) was only parsed with `fromisoformat`, which raises on non-ISO input. Added a fallback that parses the value as a Unix timestamp when ISO parsing fails.
+- **Water Sample Time** — removed the `DIAGNOSTIC` entity category and now enabled by default, matching the other water quality sensors (pH, ORP, EC, TDS) it's paired with.
+
 ## [1.0.5] - 2026-06-05
 
 ### Fixed
