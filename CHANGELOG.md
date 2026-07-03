@@ -1,12 +1,51 @@
 # Changelog
 
+=======
+## [1.2.3] - 2026-07-01
+
+### Fixed
+- Fixed HACS release notes layout bug by combining custom release notes with GitHub's `generate_release_notes` format.
+
+## [1.2.2] - 2026-07-01
+
+### Fixed
+- Fixed HACS release notes display timing issue by ensuring the GitHub Release is fully built before clients poll the new tag.
+
+## [1.2.1] - 2026-07-01
+
+### Fixed
+- Fixed empty release notes in HACS UI by dynamically injecting CHANGELOG.md snippets into GitHub Release tags.
+
+## [1.2.0] - 2026-07-01
+
+### Added
+- Added HA 2024.4+ Compliance using `ConfigEntry` typing (`AiperRuntimeData`).
+- Added HACS `info.md` with "My Home Assistant" badges for simplified installation.
+- Expanded device support: Surfer S2, HydroComm Pro, W2 Series, and Shark are now marked as officially Verified.
+
+### Changed
+- Refactored all platform files to remove legacy `hass.data` dictionary access.
+- Updated integration Quality Scale to Silver tier compliance.
+
+### Fixed
+- Fixed Config Flow handling with proper error class routing (`CannotConnect`, `InvalidAuth`, `SessionConflict`, `InvalidResponse`).
+- Fixed helper function `EntityState` object evaluation bugs leading to missing entities and incorrect device names.
+
+## [1.1.0] - 2026-06-21
+
+### Added
+
+- **Adoption & Trust Overhaul** — Complete rewrite of the integration README to clarify cloud dependencies and highlight supported models.
+- **Diagnostic Safety** — Added automated GitHub issue templates to guide users in submitting safe, redacted diagnostics for unsupported models.
+- **Entity UX** — Disabled low-value telemetry sensors by default to declutter new user dashboards.
+- **Manual State Recovery** — Added safe per-device buttons for Refresh Shadow, Refresh Metadata, and disabled-by-default Clear Command State.
+
 ## [1.0.6] - 2026-06-20
 
 ### Fixed
 
 - **Water Sample Time** — `wqs_sample_time` was always unavailable because the HydroComm's `time` field (`'1781949708'`, a Unix timestamp) was only parsed with `fromisoformat`, which raises on non-ISO input. Added a fallback that parses the value as a Unix timestamp when ISO parsing fails.
 - **Water Sample Time** — removed the `DIAGNOSTIC` entity category and now enabled by default, matching the other water quality sensors (pH, ORP, EC, TDS) it's paired with.
-
 ## [1.0.5] - 2026-06-05
 
 ### Fixed
@@ -53,7 +92,7 @@
 - **Scuba X1** — charging state and mode entity no longer misbehave during charging cycles: status code 3 (`CHARGING`) is now consistently mapped to `charging = True` and the mode entity is suppressed while the cleaner is not running.
 - `normalize_device_state` now initialises all HydroComm entity keys to stable `None` states at setup time so Home Assistant creates the entities before the first MQTT shadow report arrives.
 
-## Unreleased
+## Earlier Development Notes
 
 ### Added
 
